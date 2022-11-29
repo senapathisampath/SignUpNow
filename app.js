@@ -2,7 +2,7 @@ const express=require("express");
 const bodyParser=require("body-parser");
 const request=require("request");
 const https=require("https");
-
+const credential=require("./credential");
 const app=express();
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -29,11 +29,8 @@ app.post("/",function(req,res){
  };
  const jsondata=JSON.stringify(data);
  const url="https://us10.api.mailchimp.com/3.0/lists/c83c6de55f";
- const options={
-   method:"POST",
-   auth:"aswin:a7b0f562605614626c49ed4b99932c66-us10"
- }
- const bc=https.request(url,options,function(response){
+
+ const bc=https.request(url,credential.options,function(response){
 
    if(response.statusCode===200){
      res.sendFile(__dirname+"/success.html");
